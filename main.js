@@ -248,18 +248,6 @@ const thicknessSlider = document.getElementById('thicknessSlider');
 const zoomSlider = document.getElementById('zoomSlider');
 const objLoader = document.getElementById('objLoader');
 const loadPengerBtn = document.getElementById('loadPengerBtn');
-const toggleBtn = document.getElementById('toggleBtn');
-const controlsPanel = document.getElementById('controlsPanel');
-
-// Toggle UI
-toggleBtn.addEventListener('click', () => {
-    controlsPanel.classList.toggle('hidden');
-    if (controlsPanel.classList.contains('hidden')) {
-        toggleBtn.textContent = '+';
-    } else {
-        toggleBtn.textContent = '_';
-    }
-});
 
 // Sync theme color immediately when color changes
 colorPicker.addEventListener('input', (e) => {
