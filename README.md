@@ -2,7 +2,7 @@
 
 Um projeto de visualização 3D simples usando HTML5 Canvas e JavaScript puro, sem bibliotecas externas.
 
-![Exemplo](animation.gif)
+![Animação](animation.gif)
 
 🔗 **Teste ao vivo**: [https://gabrielhom.github.io/simple-3d-graphics/](https://gabrielhom.github.io/simple-3d-graphics/)
 
@@ -19,6 +19,7 @@ O projeto implementa uma engine 3D básica "do zero":
     - **Zoom**: Scroll ou Slider.
 4.  **Personalização**:
     - Use o painel para alterar **Cor**, **Espessura** e **Zoom**.
+    - **Toggle UI**: O botão `_` esconde o painel para uma visão limpa.
     - Em dispositivos móveis, o painel se ajusta para o topo da tela.
 5.  **Touch Support**: 
     - **1 Dedo**: Gira o objeto.
