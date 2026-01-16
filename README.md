@@ -37,5 +37,6 @@ O projeto implementa uma engine 3D básica "do zero":
 
 ## Créditos
 
-- Baseado no projeto de **Radu Mariescu-Istodor**: [YouTube Video](https://www.youtube.com/watch?v=qjWkNZ0SXfo)
+- Baseado no projeto de **Tsoding**: [YouTube Video](https://www.youtube.com/watch?v=qjWkNZ0SXfo)
+
 - Modelo `penger.obj` por **Max Kawula**: [GitHub Repository](https://github.com/Max-Kawula/penger-obj)
