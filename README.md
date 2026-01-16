@@ -6,10 +6,6 @@ Um projeto de visualização 3D simples usando HTML5 Canvas e JavaScript puro, s
 
 🔗 **Teste ao vivo**: [https://gabrielhom.github.io/simple-3d-graphics/](https://gabrielhom.github.io/simple-3d-graphics/)
 
-## Como rodar
-
-Basta abrir o arquivo `index.html` em qualquer navegador moderno.
-
 ## Como funciona
 
 O projeto implementa uma engine 3D básica "do zero":
