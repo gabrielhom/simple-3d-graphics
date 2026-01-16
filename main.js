@@ -157,7 +157,11 @@ window.addEventListener('touchend', () => {
 });
 
 window.addEventListener('touchmove', (e) => {
-    e.preventDefault();
+    // Only prevent default if we are actively interacting with the 3D scene
+    if (isDragging || isPanning) {
+        e.preventDefault();
+    }
+
     if (isDragging && e.touches.length === 1) {
         const clientX = e.touches[0].clientX;
         const clientY = e.touches[0].clientY;

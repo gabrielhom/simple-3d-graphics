@@ -4,6 +4,10 @@ Um projeto de visualização 3D simples usando HTML5 Canvas e JavaScript puro, s
 
 🔗 **Teste ao vivo**: [https://gabrielhom.github.io/simple-3d-graphics/](https://gabrielhom.github.io/simple-3d-graphics/)
 
+## Como rodar
+
+Basta abrir o arquivo `index.html` em qualquer navegador moderno.
+
 ## Como funciona
 
 O projeto implementa uma engine 3D básica "do zero":
@@ -18,7 +22,9 @@ O projeto implementa uma engine 3D básica "do zero":
 4.  **Personalização**:
     - Use o painel para alterar **Cor**, **Espessura** e **Zoom**.
     - Em dispositivos móveis, o painel se ajusta para o topo da tela.
-5.  **Touch Support**: Funciona em celulares com gestos de toque para girar.
+5.  **Touch Support**: 
+    - **1 Dedo**: Gira o objeto.
+    - **2 Dedos**: Move (Pan) e dá Zoom (Pinça) ao mesmo tempo.
 6.  **Carregar Modelo (.obj)**:
     - Use o botão "Escolher arquivo" para carregar seus próprios modelos 3D em formato `.obj`.
     - O sistema lê vértices (`v`) e faces (`f`) e cria o wireframe automaticamente.
