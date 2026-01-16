@@ -2,6 +2,8 @@
 
 Um projeto de visualização 3D simples usando HTML5 Canvas e JavaScript puro, sem bibliotecas externas.
 
+![Exemplo](animation.gif)
+
 🔗 **Teste ao vivo**: [https://gabrielhom.github.io/simple-3d-graphics/](https://gabrielhom.github.io/simple-3d-graphics/)
 
 ## Como rodar
