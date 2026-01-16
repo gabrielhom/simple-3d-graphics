@@ -127,6 +127,8 @@ window.addEventListener('wheel', (e) => {
 }, { passive: false });
 
 // Touch Interactions
+let lastTouchDistance = 0;
+
 canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
     if (e.touches.length === 1) {
@@ -137,15 +139,21 @@ canvas.addEventListener('touchstart', (e) => {
         velocityY = 0;
     } else if (e.touches.length === 2) {
         isPanning = true;
-        // Midpoint
+        // Midpoint for Pan
         lastPanX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
         lastPanY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+
+        // Distance for Zoom
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        lastTouchDistance = Math.hypot(dx, dy);
     }
 }, { passive: false });
 
 window.addEventListener('touchend', () => {
     isDragging = false;
     isPanning = false;
+    lastTouchDistance = 0;
 });
 
 window.addEventListener('touchmove', (e) => {
@@ -165,19 +173,35 @@ window.addEventListener('touchmove', (e) => {
 
         velocityX = deltaY * 0.01;
         velocityY = deltaX * 0.01;
-    } else if (isPanning && e.touches.length === 2) {
-        // Calculate new midpoint
+    } else if (e.touches.length === 2) {
+        // Pan Logic
         const currentPanX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
         const currentPanY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
 
-        const deltaX = currentPanX - lastPanX;
-        const deltaY = currentPanY - lastPanY;
+        if (isPanning) {
+            const deltaX = currentPanX - lastPanX;
+            const deltaY = currentPanY - lastPanY;
+            offsetX += deltaX;
+            offsetY += deltaY;
+            lastPanX = currentPanX;
+            lastPanY = currentPanY;
+        }
 
-        lastPanX = currentPanX;
-        lastPanY = currentPanY;
+        // Pinch Zoom Logic
+        const dx = e.touches[0].clientX - e.touches[1].clientX;
+        const dy = e.touches[0].clientY - e.touches[1].clientY;
+        const currentDist = Math.hypot(dx, dy);
 
-        offsetX += deltaX;
-        offsetY += deltaY;
+        if (lastTouchDistance > 0) {
+            const deltaDist = currentDist - lastTouchDistance;
+            // Sensitivity factor
+            const zoomSpeed = 0.05;
+            // Inverse logic: increasing distance -> zoom in -> smaller cameraDistance
+            cameraDistance -= deltaDist * zoomSpeed;
+            cameraDistance = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, cameraDistance));
+            zoomSlider.value = cameraDistance;
+        }
+        lastTouchDistance = currentDist;
     }
 }, { passive: false });
 
