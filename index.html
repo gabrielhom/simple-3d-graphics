@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple 3D Graphics - Vanilla JS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="controls">
+        <label>
+            Cor
+            <input type="color" id="colorPicker" value="#00ffcc">
+        </label>
+        <label>
+            Espessura
+            <input type="range" id="thicknessSlider" min="0.5" max="10" step="0.5" value="2">
+        </label>
+        <label>
+            Zoom
+            <input type="range" id="zoomSlider" min="0.5" max="50" step="0.1" value="4">
+        </label>
+        <label>
+            Carregar OBJ
+            <input type="file" id="objLoader" accept=".obj">
+        </label>
+        <button id="loadPengerBtn">🐧 Penger</button>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script src="models.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
