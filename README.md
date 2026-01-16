@@ -21,6 +21,7 @@ O projeto implementa uma engine 3D básica "do zero":
     - **Zoom**: Scroll ou Slider.
 4.  **Personalização**:
     - Use o painel para alterar **Cor**, **Espessura** e **Zoom**.
+    - **Toggle UI**: O botão `_` esconde o painel para uma visão limpa.
     - Em dispositivos móveis, o painel se ajusta para o topo da tela.
 5.  **Touch Support**: 
     - **1 Dedo**: Gira o objeto.
