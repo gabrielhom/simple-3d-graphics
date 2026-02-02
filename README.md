@@ -1,42 +1,37 @@
 # Simple 3D Graphics (Vanilla JS)
 
-Um projeto de visualização 3D simples usando HTML5 Canvas e JavaScript puro, sem bibliotecas externas.
+A lightweight 3D visualization engine built from scratch using HTML5 Canvas and pure JavaScript. No external libraries, no WebGL—just math.
 
-![Animação](animation.gif)
+![Demo Animation](animation.gif)
 
-🔗 **Teste ao vivo**: [https://gabrielhom.github.io/simple-3d-graphics/](https://gabrielhom.github.io/simple-3d-graphics/)
+🔗 **Live Demo**: [https://gabrielhom.github.io/simple-3d-graphics/](https://gabrielhom.github.io/simple-3d-graphics/)
 
-## Como funciona
+## 🚀 Key Features
 
-O projeto implementa uma engine 3D básica "do zero":
+*   **Zero Dependencies**: Pure Vanilla JS implementation of 3D projection math.
+*   **OBJ Loader**: Parse and render custom `.obj` 3D models directly in the browser.
+*   **Interactive Controls**:
+    *   **Rotate**: Left-click drag / One-finger touch
+    *   **Pan**: Right-click drag / Two-finger drag
+    *   **Zoom**: Scroll wheel / Pinch gesture
+*   **Physics**: Smooth momentum-based rotation handling.
+*   **Responsive UI**: Custom control panel for color, thickness, and zoom adjustments.
 
-1.  **Vértices**: Um cubo é definido por 8 pontos em um espaço 3D (x, y, z).
-2.  **Projeção**: Usamos uma fórmula de projeção de perspectiva simples para converter as coordenadas 3D para 2D (x, y) que podem ser desenhadas no Canvas.
-3.  **Rotação e Física**:
-    - **Clique Esquerdo / 1 Dedo**: Rotaciona o objeto.
-    - **Clique Direito / 2 Dedos**: Move o objeto (Pan).
-    - **Momentum**: Inércia ao soltar.
-    - **Zoom**: Scroll ou Slider.
-4.  **Personalização**:
-    - Use o painel para alterar **Cor**, **Espessura** e **Zoom**.
-    - **Toggle UI**: O botão `_` esconde o painel para uma visão limpa.
-    - Em dispositivos móveis, o painel se ajusta para o topo da tela.
-5.  **Touch Support**: 
-    - **1 Dedo**: Gira o objeto.
-    - **2 Dedos**: Move (Pan) e dá Zoom (Pinça) ao mesmo tempo.
-6.  **Carregar Modelo (.obj)**:
-    - Use o botão "Escolher arquivo" para carregar seus próprios modelos 3D em formato `.obj`.
-    - O sistema lê vértices (`v`) e faces (`f`) e cria o wireframe automaticamente.
-7.  **Render Loop**: O `requestAnimationFrame` atualiza o canvas continuamente.
+## 🛠️ How It Works
 
-## Arquivos
+This project demonstrates the fundamentals of 3D computer graphics:
 
-- `index.html`: Estrutura base e Canvas.
-- `style.css`: Estilização para tela cheia e fundo escuro.
-- `main.js`: Lógica matemática e loop de renderização.
+1.  **Vertex Processing**: Objects are defined by vertices in 3D space (x, y, z).
+2.  **Perspective Projection**: Implements the math to map 3D coordinates onto a 2D viewport.
+3.  **Render Loop**: Uses `requestAnimationFrame` for smooth 60fps rendering.
+4.  **Wireframe Rendering**: Connects projected vertices to form faces and meshes.
+## 📂 Project Structure
 
-## Créditos
+*   `main.js`: Core engine logic (math, event handling, render loop).
+*   `index.html`: Canvas setup and UI overlay.
+*   `style.css`: Minimalist styling.
 
-- Baseado no projeto de **Tsoding**: [YouTube Video](https://www.youtube.com/watch?v=qjWkNZ0SXfo)
+## Credits
 
-- Modelo `penger.obj` por **Max Kawula**: [GitHub Repository](https://github.com/Max-Kawula/penger-obj)
+*   Inspired by **Tsoding**: [YouTube Video](https://www.youtube.com/watch?v=qjWkNZ0SXfo)
+*   `penger.obj` model by **Max Kawula**: [GitHub Repository](https://github.com/Max-Kawula/penger-obj)
