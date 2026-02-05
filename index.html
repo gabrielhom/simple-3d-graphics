@@ -27,6 +27,23 @@
             Carregar OBJ
             <input type="file" id="objLoader" accept=".obj">
         </label>
+        <label>
+            Fundo
+            <input type="color" id="bgPicker" value="#000000">
+        </label>
+        <label>
+            Auto-rotacionar
+            <input type="checkbox" id="autoRotateToggle" checked>
+        </label>
+        <label>
+            Vel. Rotação
+            <input type="range" id="autoRotateSpeed" min="0" max="0.1" step="0.001" value="0.01">
+        </label>
+        <div class="row">
+            <button id="resetViewBtn">Resetar Visão</button>
+            <button id="fitModelBtn">Centralizar</button>
+        </div>
+        <div id="modelInfo">Vertices: 0 | Arestas: 0</div>
         <button id="loadPengerBtn">🐧 Penger</button>
     </div>
     <canvas id="canvas"></canvas>

@@ -12,6 +12,12 @@ const el = {
         btnPenger: document.getElementById('loadPengerBtn'),
         btnToggle: document.getElementById('toggleBtn'),
         panel: document.getElementById('controlsPanel'),
+        bg: document.getElementById('bgPicker'),
+        autoRotate: document.getElementById('autoRotateToggle'),
+        autoRotateSpeed: document.getElementById('autoRotateSpeed'),
+        btnResetView: document.getElementById('resetViewBtn'),
+        btnFit: document.getElementById('fitModelBtn'),
+        info: document.getElementById('modelInfo'),
     }
 };
 
@@ -30,15 +36,18 @@ const state = {
     height: 0,
     geometry: {
         vertices: [],
-        edges: [] // Array of [startIdx, endIdx]
+        edges: [],
+        radius: 1,
     },
     transform: {
         angle: { x: 0, y: 0 },
         velocity: { x: 0, y: 0 },
         camera: {
             distance: CONFIG.initialCamera,
-            offset: { x: 0, y: 0 } // Pan offset
-        }
+            offset: { x: 0, y: 0 }
+        },
+        autoRotate: true,
+        autoRotateSpeed: 0.01,
     },
     input: {
         isDragging: false,
@@ -50,8 +59,46 @@ const state = {
 };
 
 // --- Geometry Helpers ---
-// Simple Factory for Point3D
 const point3D = (x, y, z) => ({ x, y, z });
+
+const normalizeGeometry = () => {
+    const { vertices } = state.geometry;
+    if (!vertices.length) return;
+    let min = { x: Infinity, y: Infinity, z: Infinity };
+    let max = { x: -Infinity, y: -Infinity, z: -Infinity };
+    vertices.forEach(({ x, y, z }) => {
+        min.x = Math.min(min.x, x); max.x = Math.max(max.x, x);
+        min.y = Math.min(min.y, y); max.y = Math.max(max.y, y);
+        min.z = Math.min(min.z, z); max.z = Math.max(max.z, z);
+    });
+    const center = point3D(
+        (min.x + max.x) / 2,
+        (min.y + max.y) / 2,
+        (min.z + max.z) / 2
+    );
+    const size = Math.max(max.x - min.x, max.y - min.y, max.z - min.z) || 1;
+    const scale = 2 / size;
+    state.geometry.vertices = vertices.map(({ x, y, z }) => point3D(
+        (x - center.x) * scale,
+        (y - center.y) * scale,
+        (z - center.z) * scale
+    ));
+    state.geometry.radius = 1; // normalized
+};
+
+const fitToView = () => {
+    state.transform.camera.distance = Math.max(
+        CONFIG.zoom.min,
+        Math.min(CONFIG.zoom.max, state.geometry.radius * 4)
+    );
+    state.transform.camera.offset = { x: 0, y: 0 };
+    state.transform.angle = { x: 0, y: 0 };
+    el.ui.zoom.value = state.transform.camera.distance;
+};
+
+const updateInfo = () => {
+    el.ui.info.textContent = `Vertices: ${state.geometry.vertices.length} | Arestas: ${state.geometry.edges.length}`;
+};
 
 // Setup default Cube
 const initCube = () => {
@@ -66,8 +113,9 @@ const initCube = () => {
         [4, 5], [5, 6], [6, 7], [7, 4],
         [0, 4], [1, 5], [2, 6], [3, 7]
     ];
+    normalizeGeometry();
+    updateInfo();
 };
-
 initCube();
 
 // --- Core Engine ---
@@ -276,6 +324,9 @@ const parseOBJ = (text) => {
         state.geometry.vertices = newVertices;
         state.geometry.edges = newEdges;
         state.transform.angle = { x: 0, y: 0 };
+        normalizeGeometry();
+        fitToView();
+        updateInfo();
         console.log(`Loaded: ${newVertices.length} v, ${newEdges.length} e`);
     }
 };
@@ -313,8 +364,7 @@ el.ui.loader.addEventListener('change', (e) => {
 el.ui.btnPenger.addEventListener('click', () => {
     if (typeof PENGER_OBJ !== 'undefined') {
         parseOBJ(PENGER_OBJ);
-        state.transform.camera.distance = 5;
-        el.ui.zoom.value = 5;
+        fitToView();
     } else {
         alert('Penger not found!');
     }
@@ -331,12 +381,13 @@ const loop = () => {
     el.ctx.strokeStyle = el.ui.color.value;
     el.ctx.lineWidth = el.ui.thickness.value;
 
-    // Physics (Momentum)
+    // Physics (Momentum) + Auto-rotate
     if (!state.input.isDragging) {
         state.transform.angle.x += state.transform.velocity.x;
         state.transform.angle.y += state.transform.velocity.y;
-
-        // Friction
+        if (state.transform.autoRotate) {
+            state.transform.angle.y += state.transform.autoRotateSpeed;
+        }
         state.transform.velocity.x *= CONFIG.physics.friction;
         state.transform.velocity.y *= CONFIG.physics.friction;
     }
@@ -367,3 +418,24 @@ const loop = () => {
 };
 
 loop();
+
+// Remove duplicate toggle listener (was causing double-toggle)
+ // el.ui.btnToggle.addEventListener('click', () => {
+ //     el.ui.panel.classList.toggle('hidden');
+ //     el.ui.btnToggle.textContent = el.ui.panel.classList.contains('hidden') ? '+' : '_';
+ // });
+
+// Keep the remaining listeners
+el.ui.autoRotate.addEventListener('change', (e) => {
+    state.transform.autoRotate = e.target.checked;
+});
+el.ui.autoRotateSpeed.addEventListener('input', (e) => {
+    state.transform.autoRotateSpeed = parseFloat(e.target.value);
+});
+el.ui.btnResetView.addEventListener('click', () => {
+    state.transform.angle = { x: 0, y: 0 };
+    state.transform.velocity = { x: 0, y: 0 };
+    state.transform.camera.offset = { x: 0, y: 0 };
+    fitToView();
+});
+el.ui.btnFit.addEventListener('click', fitToView);
